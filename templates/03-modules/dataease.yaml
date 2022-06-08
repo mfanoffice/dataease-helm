@@ -68,20 +68,6 @@ spec:
           {{ end }}
           
 ---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: dataease
-#  labels:
-#    app: dataease
-#spec:
-#  clusterIP: None
-#  selector:
-#    app: dataease
-#  ports:
-#    - name: tcp
-#      port: 8081
-#      protocol: TCP
 apiVersion: v1
 kind: Service
 metadata:
