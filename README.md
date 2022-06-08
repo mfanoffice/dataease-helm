@@ -1,4 +1,4 @@
-# MeterSphere Helm Chart 部署
+# DataEase Helm Chart 部署
 ## 版本说明
 此安装包仅支持DataEase精简模式，即仅部署dataease和MySQL，全量部署将在后续更新。
 ## 使用示例
