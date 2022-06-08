@@ -1,0 +1,12 @@
+apiVersion: v1
+appVersion: 1.10.0
+description: A Helm chart to deploy DataEase
+home: https://dataease.io
+icon: https://dataease.io/images/logo/favicon.ico
+maintainers:
+- email: dataease@fit2cloud.com
+  name: DataEase
+name: dataease
+sources:
+- https://github.com/dataease/
+version: 1.1.0

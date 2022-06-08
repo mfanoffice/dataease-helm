@@ -1,0 +1,3 @@
+Thanks for installing the DataEase.
+
+Default username/password for DataEase is admin/dataease

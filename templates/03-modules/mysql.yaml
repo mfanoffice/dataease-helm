@@ -1,0 +1,77 @@
+{{ if .Values.mysql.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  serviceName: {{.Values.common.mysql.host}}
+  selector:
+    matchLabels:
+      app: {{.Values.common.mysql.host}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.common.mysql.host}}
+    spec:
+      containers:
+        - name: mysql
+          image: {{.Values.common.imagePrefix}}{{.Values.mysql.image}}:{{.Values.mysql.imageTag}}
+          imagePullPolicy: {{.Values.common.imagePullPolicy}}
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 0.2
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{.Values.mysql.password}}
+          ports:
+            - name: tcp
+              containerPort: 3306
+          volumeMounts:
+            - mountPath: /etc/mysql/conf.d/my.cnf
+              name: opt-dataease-config
+              subPath: my.cnf
+            - mountPath: /docker-entrypoint-initdb.d/init.sql
+              name: init-mysql
+              subPath: init.sql
+            - mountPath: /var/lib/mysql
+              name: mysql-data
+              subPath: mysql
+      {{if ne (.Values.common.imagePullSecrets | default "nil") "nil"}}
+      imagePullSecrets:
+        - name: {{.Values.common.imagePullSecrets}}
+      {{ end }}
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: mysql-config
+          name: opt-dataease-config
+        - configMap:
+            defaultMode: 420
+            name: mysql-config
+          name: init-mysql
+        - name: mysql-data
+          {{if .Values.mysql.persistence.enabled}}
+          persistentVolumeClaim:
+            claimName: mysql-data-pvc
+          {{ else }}
+          emptyDir: {}
+          {{ end }}
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.common.mysql.host}}
+  labels:
+    app: {{.Values.common.mysql.host}}
+spec:
+  clusterIP: None
+  selector:
+    app: {{.Values.common.mysql.host}}
+  ports:
+    - name: tcp
+      port: 3306
+      protocol: TCP
+{{end}}

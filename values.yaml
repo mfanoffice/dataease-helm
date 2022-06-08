@@ -1,0 +1,62 @@
+ingress:
+  enabled: true
+  host: demo.apps.dataease.com
+  annotations: {}
+    ## example for ingress annotions.
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"      
+  https:
+    enabled: false
+    secretName: ""
+
+common:
+  imagePrefix: "registry.cn-qingdao.aliyuncs.com/dataease/"
+  imagePullSecrets: nil
+  storageClass: default
+  imagePullPolicy: IfNotPresent
+  mysql: 
+    host: dataease-mysql
+    port: 3306
+    username: root
+    password: Password123@mysql
+  dataease:
+    host: dataease
+    initpassword: DataEase123456
+    logintimeout: 480
+
+DataEase:
+  enabled: true
+  image: dataease
+  replicas: 1
+  properties: |-
+    spring.datasource.url=jdbc:mysql://{{.Values.common.mysql.host}}:{{.Values.common.mysql.port}}/dataease?autoReconnect=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    spring.datasource.username={{.Values.common.mysql.username}}
+    spring.datasource.password={{.Values.common.mysql.password}}
+    dataease.init_password={{.Values.common.dataease.initpassword}}
+    dataease.login_timeout={{.Values.common.dataease.logintimeout}}
+    logger.level=INFO
+    engine_mode=simple
+
+logPersistence:
+  enabled: true
+  accessModes: ReadWriteOnce
+  size: 10Gi
+
+dataPersistence:
+  enabled: true
+  accessModes: ReadWriteOnce
+  size: 10Gi
+
+dataease:
+  image: dataease
+  imageTag: "v1.10.0"
+
+mysql:
+  enabled: true
+  image: mysql
+  imageTag: "5.7.36"
+  password: Password123@mysql
+  persistence:
+    enabled: true
+    accessModes: ReadWriteOnce
+    size: 20Gi

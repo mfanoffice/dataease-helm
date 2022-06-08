@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dataease-config
+data:
+{{if .Values.DataEase.enabled | default true }}
+  dataease.properties: |-
+    {{ tpl .Values.DataEase.properties . | nindent 4 }}
+{{end}}

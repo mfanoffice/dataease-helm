@@ -1,0 +1,99 @@
+{{if .Values.DataEase.enabled }}
+apiVersion: apps/v1
+#kind: StatefulSet
+kind: Deployment
+metadata:
+  name: {{.Values.common.dataease.host}}
+spec:
+  replicas: 1
+#  serviceName: "dataease"
+  selector:
+    matchLabels:
+      app: {{.Values.common.dataease.host}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.common.dataease.host}}
+    spec:
+      containers:
+        - name: dataease
+          image: {{.Values.common.imagePrefix}}{{.Values.dataease.image}}:{{.Values.dataease.imageTag}}
+          imagePullPolicy: {{.Values.common.imagePullPolicy}}
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 0.4
+          ports:
+            - name: tcp
+              containerPort: 8081
+          volumeMounts:
+            - mountPath: /opt/dataease/conf/dataease.properties
+              name: opt-dataease-config
+              subPath: dataease.properties
+            - mountPath: /opt/dataease/logs
+              name: opt-dataease-logs
+            - mountPath: /opt/dataease/plugins/thirdpart
+              name: opt-dataease-plugins-thirdpart
+            - mountPath: /opt/dataease/data/static-resource
+              name: opt-dataease-data-static-resource
+      {{if ne (.Values.common.imagePullSecrets | default "nil") "nil"}}
+      imagePullSecrets:
+        - name: {{.Values.common.imagePullSecrets}}
+      {{ end }}
+      volumes:
+        - name: opt-dataease-config
+          configMap:
+            name: dataease-config
+            defaultMode: 420
+        - name: opt-dataease-logs
+          {{if .Values.logPersistence.enabled}}
+          persistentVolumeClaim:
+            claimName: dataease-logs-pvc
+          {{ else }}
+          emptyDir: {}
+          {{ end }}
+        - name: opt-dataease-plugins-thirdpart
+          {{if .Values.dataPersistence.enabled}}
+          persistentVolumeClaim:
+            claimName: dataease-plugins-thirdpart-pvc
+          {{ else }}
+          emptyDir: {}
+          {{ end }}
+        - name: opt-dataease-data-static-resource
+          {{if .Values.dataPersistence.enabled}}
+          persistentVolumeClaim:
+            claimName: dataease-data-static-resource-pvc
+          {{ else }}
+          emptyDir: {}
+          {{ end }}
+          
+---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: dataease
+#  labels:
+#    app: dataease
+#spec:
+#  clusterIP: None
+#  selector:
+#    app: dataease
+#  ports:
+#    - name: tcp
+#      port: 8081
+#      protocol: TCP
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.common.dataease.host}}
+  labels:
+    app: {{.Values.common.dataease.host}}
+spec:
+  sessionAffinity: ClientIP
+  selector:
+    app: {{.Values.common.dataease.host}}
+  ports:
+    - name: http
+      port: 8081
+      protocol: TCP
+{{end}}
