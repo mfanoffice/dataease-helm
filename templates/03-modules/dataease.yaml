@@ -1,12 +1,10 @@
 {{if .Values.DataEase.enabled }}
 apiVersion: apps/v1
-#kind: StatefulSet
 kind: Deployment
 metadata:
   name: {{.Values.common.dataease.host}}
 spec:
   replicas: 1
-#  serviceName: "dataease"
   selector:
     matchLabels:
       app: {{.Values.common.dataease.host}}
@@ -17,7 +15,7 @@ spec:
     spec:
       containers:
         - name: dataease
-          image: {{.Values.common.imagePrefix}}{{.Values.dataease.image}}:{{.Values.dataease.imageTag}}
+          image: {{.Values.common.imagePrefix}}{{.Values.DataEase.image}}:{{.Values.DataEase.imageTag}}
           imagePullPolicy: {{.Values.common.imagePullPolicy}}
           resources:
             requests:
