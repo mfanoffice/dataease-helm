@@ -1,4 +1,4 @@
-{{if and eq .Values.DataEase.engine_mode "cluster"  .Values.doris-fe.enable}}
+{{- if and eq .Values.DataEase.engine_mode "cluster"  .Values.doris-fe.enable}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -58,4 +58,4 @@ spec:
       - name: opt-fe-doris-meta
         persistentVolumeClaim:
           claimName: pvc-doris-fe
-{{end}}
+{{- end}}
