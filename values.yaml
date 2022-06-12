@@ -51,7 +51,7 @@ mysql:
     accessModes: ReadWriteOnce
     size: 20Gi
 
-doris-fe:
+doris_fe:
   enable: true
   host: doris-fe
   persistence:
@@ -59,7 +59,7 @@ doris-fe:
     accessModes: ReadWriteOnce
     size: 10Gi
 
-doris-be:
+doris_be:
   enable: true
   host: doris-be
   persistence:

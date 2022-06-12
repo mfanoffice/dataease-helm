@@ -1,25 +1,25 @@
-{{- if and (.Values.DataEase.engine_mode "cluster") (.Values.doris-fe.enable)}}
+{{if and (- eq .Values.DataEase.engine_mode "cluster") (.Values.doris_fe.enable)}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{.Values.doris-fe.host}}
+  name: {{.Values.doris_fe.host}}
   labels:
-    app: {{.Values.doris-fe.host}}
+    app: {{.Values.doris_fe.host}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{.Values.doris-fe.host}}
+      app: {{.Values.doris_fe.host}}
   template:
     metadata:
       labels:
-        app: {{.Values.doris-fe.host}}
+        app: {{.Values.doris_fe.host}}
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       #nodeName: fanym-worker-1
       containers:
-        - name: {{.Values.doris-fe.host}}
+        - name: {{.Values.doris_fe.host}}
           env:
           - name: FE_IPADDRESS
             valueFrom:
@@ -58,4 +58,4 @@ spec:
       - name: opt-fe-doris-meta
         persistentVolumeClaim:
           claimName: pvc-doris-fe
-{{- end}}
+{{end}}
