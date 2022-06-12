@@ -1,0 +1,61 @@
+{{if and .Values.DataEase.engine_mode = cluster .Values.doris-fe.enable}}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{.Values.doris-fe.host}}
+  labels:
+    app: {{.Values.doris-fe.host}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Values.doris-fe.host}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.doris-fe.host}}
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      #nodeName: fanym-worker-1
+      containers:
+        - name: {{.Values.doris-fe.host}}
+          env:
+          - name: FE_IPADDRESS
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          image: uhub.service.ucloud.cn/dataease/doris-fe:v1.0
+          command: [ "/bin/bash", "-ce", "/opt/doris/fe/bin/start_fe.sh --daemon;tail -f /dev/null" ]
+          volumeMounts:
+          - mountPath: /opt/fe/doris-meta
+            name: opt-fe-doris-meta
+          livenessProbe:
+            httpGet:
+              path: /api/bootstrap
+              port: 8030
+            initialDelaySeconds: 300
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3      
+          ports:
+            - containerPort: 8030
+              protocol: TCP
+            - containerPort: 9020
+              protocol: TCP
+            - containerPort: 9030
+              protocol: TCP
+            - containerPort: 9010
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 2
+              memory: 4G
+            requests:
+              cpu: 200m
+              memory: 1G
+      volumes:
+      - name: opt-fe-doris-meta
+        persistentVolumeClaim:
+          claimName: pvc-doris-fe
+{{end}}

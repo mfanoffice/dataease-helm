@@ -1,0 +1,63 @@
+{{if and .Values.DataEase.engine_mode = cluster .Values.doris-be.enable}}
+kind: Deployment
+apiVersion: apps/v1
+metadata: {{.Values.doris-be.host}}
+  name: 
+  labels:
+    app: {{.Values.doris-be.host}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Values.doris-be.host}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.doris-be.host}}
+    spec:
+      #nodeName: fanym-master-1
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: {{.Values.doris-be.host}}
+          env:
+            - name: BE_IPADDRESS
+              valueFrom:
+                 fieldRef:
+                   fieldPath: status.podIP
+          image: uhub.service.ucloud.cn/dataease/doris-be:v1.0
+          command: [ "/bin/bash", "-ce", "/opt/doris/be/bin/start_be.sh --daemon;tail -f /dev/null" ]
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8040
+            initialDelaySeconds: 300
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3            
+          ports:
+            - containerPort: 9060
+              protocol: TCP
+            - containerPort: 9070
+              protocol: TCP
+            - containerPort: 8040
+              protocol: TCP
+            - containerPort: 9050
+              protocol: TCP
+            - containerPort: 8060
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 2
+              memory: 2G
+            requests:
+              cpu: 200m
+              memory: 1G
+          volumeMounts:
+            - mountPath: /opt/be/storage
+              name: opt-be-storage
+      volumes:
+      - name: opt-be-storage
+        persistentVolumeClaim:
+          claimName: pvc-doris-be
+{{end}}
