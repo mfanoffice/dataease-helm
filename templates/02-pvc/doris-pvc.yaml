@@ -1,27 +1,27 @@
-{{ if .Values.doris-fe.persistence.enabled}}
+{{ if .Values.doris_fe.persistence.enabled}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: pvc-doris-fe
 spec:
   accessModes:
-    - {{.Values.doris-fe.persistence.accessModes}}
+    - {{.Values.doris_fe.persistence.accessModes}}
   resources:
     requests:
-      storage: {{.Values.doris-fe.persistence.size}}
+      storage: {{.Values.doris_fe.persistence.size}}
   storageClassName: {{.Values.common.storageClass}}
 {{end}}
 ---
-{{ if .Values.doris-be.persistence.enabled}}
+{{ if .Values.doris_be.persistence.enabled}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: pvc-doris-be
 spec:
   accessModes:
-    - {{.Values.doris-be.persistence.accessModes}}
+    - {{.Values.doris_be.persistence.accessModes}}
   resources:
     requests:
-      storage: {{.Values.doris-be.persistence.size}}
+      storage: {{.Values.doris_be.persistence.size}}
   storageClassName: {{.Values.common.storageClass}}
 {{end}}
