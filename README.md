@@ -12,3 +12,9 @@ vi dataease/values.yaml
 ```bash
 helm install dataease dataease-xxx.tgz -f dataease/values.yaml
 ```
+4. 配置Doris
+```bash
+kubectl exec -it mysql-0 -- mysql -h10.168.1.11 -P9030 -uroot
+ALTER SYSTEM ADD BACKEND "10.168.1.11:9050";
+SET PASSWORD FOR 'root' = PASSWORD('Password123@doris');
+```

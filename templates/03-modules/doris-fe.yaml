@@ -30,6 +30,9 @@ spec:
           volumeMounts:
           - mountPath: /opt/fe/doris-meta
             name: opt-fe-doris-meta
+          - mountPath: /opt/doris/fe/conf/fe.conf
+            name: opt-doris-fe-config
+            subPath: fe.conf
           livenessProbe:
             httpGet:
               path: /api/bootstrap
@@ -58,4 +61,8 @@ spec:
       - name: opt-fe-doris-meta
         persistentVolumeClaim:
           claimName: pvc-doris-fe
+      - name: opt-doris-fe-config
+        configMap:
+          name: fe-config
+    
 {{end}}

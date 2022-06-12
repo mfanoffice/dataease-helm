@@ -56,8 +56,14 @@ spec:
           volumeMounts:
             - mountPath: /opt/be/storage
               name: opt-be-storage
+            - mountPath: /opt/doris/fe/conf/be.conf
+              name: opt-doris-be-config
+              subPath: be.conf
       volumes:
       - name: opt-be-storage
         persistentVolumeClaim:
           claimName: pvc-doris-be
+      - name: opt-doris-be-config
+        configMap:
+          name: be-config
 {{end}}
