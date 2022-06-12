@@ -1,4 +1,4 @@
-{{if and .Values.DataEase.engine_mode=cluster .Values.doris-fe.enable}}
+{{if and .Values.DataEase.engine_mode="cluster" .Values.doris-fe.enable}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
