@@ -1,8 +1,8 @@
 {{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.doris_be.enable)}}
 kind: Deployment
 apiVersion: apps/v1
-metadata: {{.Values.doris_be.host}}
-  name: 
+metadata: 
+  name: {{.Values.doris_be.host}}
   labels:
     app: {{.Values.doris_be.host}}
 spec:
