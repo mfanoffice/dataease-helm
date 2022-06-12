@@ -23,6 +23,8 @@ common:
     host: dataease
     initpassword: DataEase123456
     logintimeout: 480
+    nodeport_host: dataease-http
+    nodeport_port: 30081
 
 DataEase:
   enabled: true
