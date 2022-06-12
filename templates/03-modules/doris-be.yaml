@@ -1,25 +1,25 @@
-{{- if and eq .Values.DataEase.engine_mode "cluster" .Values.doris-be.enable}}
+{{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.doris_be.enable)}}
 kind: Deployment
 apiVersion: apps/v1
-metadata: {{.Values.doris-be.host}}
+metadata: {{.Values.doris_be.host}}
   name: 
   labels:
-    app: {{.Values.doris-be.host}}
+    app: {{.Values.doris_be.host}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{.Values.doris-be.host}}
+      app: {{.Values.doris_be.host}}
   template:
     metadata:
       labels:
-        app: {{.Values.doris-be.host}}
+        app: {{.Values.doris_be.host}}
     spec:
       #nodeName: fanym-master-1
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
-        - name: {{.Values.doris-be.host}}
+        - name: {{.Values.doris_be.host}}
           env:
             - name: BE_IPADDRESS
               valueFrom:
@@ -60,4 +60,4 @@ spec:
       - name: opt-be-storage
         persistentVolumeClaim:
           claimName: pvc-doris-be
-{{- end}}
+{{end}}
