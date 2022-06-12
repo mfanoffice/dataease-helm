@@ -80,4 +80,20 @@ spec:
     - name: http
       port: 8081
       protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.common.dataease.nodeport_host}}
+  labels:
+    app: {{.Values.common.dataease.host}}
+spec:
+  type: NodePort
+  selector:
+    app: {{.Values.common.dataease.host}}
+  ports:
+  - port: 8081
+    targetPort: 8081
+    nodePort: {{.Values.common.dataease.nodeport_port}}
 {{end}}
