@@ -5,11 +5,11 @@ metadata:
   name: be-config
 data:
   be.conf: |
-PPROF_TMPDIR="$DORIS_HOME/log/"
-sys_log_level = INFO
-be_port = 9060
-webserver_port = 8040
-heartbeat_service_port = 9050
-brpc_port = 8060
-priority_networks = ${BE_IPADDRESS}/24
+    PPROF_TMPDIR="$DORIS_HOME/log/"
+    sys_log_level = INFO
+    be_port = 9060
+    webserver_port = 8040
+    heartbeat_service_port = 9050
+    brpc_port = 8060
+    priority_networks = ${BE_IPADDRESS}/24
 {{end}}
