@@ -56,7 +56,7 @@ spec:
           volumeMounts:
             - mountPath: /opt/be/storage
               name: opt-be-storage
-            - mountPath: /opt/doris/fe/conf/be.conf
+            - mountPath: /opt/doris/be/conf/be.conf
               name: opt-doris-be-config
               subPath: be.conf
       volumes:
