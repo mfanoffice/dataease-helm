@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql
+  name: {{.Values.common.mysql.host}}
 spec:
   replicas: 1
   serviceName: {{.Values.common.mysql.host}}
@@ -15,7 +15,7 @@ spec:
         app: {{.Values.common.mysql.host}}
     spec:
       containers:
-        - name: mysql
+        - name: {{.Values.common.mysql.host}}
           image: {{.Values.common.imagePrefix}}{{.Values.mysql.image}}:{{.Values.mysql.imageTag}}
           imagePullPolicy: {{.Values.common.imagePullPolicy}}
           resources:
