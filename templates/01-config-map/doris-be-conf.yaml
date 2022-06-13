@@ -5,7 +5,7 @@ metadata:
   name: be-config
 data:
   be.conf: |
-    PPROF_TMPDIR="$DORIS_HOME/log/"
+    PPROF_TMPDIR = "$DORIS_HOME/log/"
     sys_log_level = INFO
     be_port = 9060
     webserver_port = 8040
