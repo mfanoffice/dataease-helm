@@ -1,6 +1,7 @@
 # DataEase Helm Chart 部署
 ## 部署方式
 此安装包支持选择部署模式：“精简模式” 和 “集群模式”；
+
 精简模式下仅部署dataease和MySQL，集群模式下将部署dataease、doris-fe、doris-be、kettle、mysql。
 
 在values.yaml中修改：
@@ -151,4 +152,5 @@ Kettle地址： kettle
 填写完成点击“校验”成功，点击“保存”即可。
 
 完成以上操作您已经在Kubernetes中配置完成了DataEase，接下来请尽情的使用它吧。
+
 最后欢迎大家提issue!
