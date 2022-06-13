@@ -44,7 +44,7 @@ spec:
             name: kettle-properties
         - name: repositories-xml
           configMap:
-            name: kettle-properties
+            name: repositories-xml
         - name: opt-dataease-data-kettle
           {{if .Values.kettle.persistence.enabled}}
           persistentVolumeClaim:
