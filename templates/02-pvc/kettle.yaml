@@ -1,0 +1,13 @@
+{{ if .Values.kettle.persistence.enabled}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: opt-dataease-data-kettle
+spec:
+  accessModes:
+    - {{.Values.kettle.persistence.accessModes}}
+  resources:
+    requests:
+      storage: {{.Values.kettle.persistence.size}}
+  storageClassName: {{.Values.common.storageClass}}
+{{end}}

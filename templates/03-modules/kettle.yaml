@@ -1,0 +1,59 @@
+{{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.kettle.enable)}}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{.Values.kettle.host}}
+  labels:
+    app: {{.Values.kettle.host}}
+spec:
+  replicas: {{.Values.kettle.replicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.kettle.host}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.kettle.host}}
+    spec:
+      containers:
+        - name: {{.Values.kettle.host}}
+          image: {{.Values.common.imagePrefix}}{{.Values.kettle.image}}:{{.Values.kettle.imageTag}}
+          imagePullPolicy: {{.Values.common.imagePullPolicy}}
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 0.2
+          env:
+            - name: PENTAHO_DI_JAVA_OPTIONS
+              value: {{.Values.kettle.java_options}}
+          ports:
+            - name: tcp
+              containerPort: 18080
+          volumeMounts:
+            - mountPath: /opt/dataease/data/kettle
+              name: opt-dataease-data-kettle
+      volumes:
+        - name: opt-dataease-data-kettle
+          {{if .Values.kettle.persistence.enabled}}
+          persistentVolumeClaim:
+            claimName: opt-dataease-data-kettle
+          {{ else }}
+          emptyDir: {}
+          {{ end }}
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.kettle.host}}
+  labels:
+    app: {{.Values.kettle.host}}
+spec:
+  clusterIP: None
+  selector:
+    app: {{.Values.kettle.host}}
+  ports:
+    - name: tcp
+      port: 18080
+      protocol: TCP
+{{end}}
