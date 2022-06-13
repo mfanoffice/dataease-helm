@@ -31,20 +31,8 @@ spec:
               containerPort: 18080
           volumeMounts:
             - name: opt-dataease-data-kettle
-              mountPath: /opt/dataease/data/kettle 
-            - name: kettle-properties
-              mountPath: /opt/kettle/conf/.kettle/kettle.properties
-              subPath: kettle.properties
-            - name: repositories-xml
-              mountPath: /opt/kettle/conf/.kettle/repositories.xml
-              subPath: repositories.xml
+              mountPath: /opt/dataease/data/kettle
       volumes:
-        - name: kettle-properties
-          configMap:
-            name: kettle-properties
-        - name: repositories-xml
-          configMap:
-            name: repositories-xml
         - name: opt-dataease-data-kettle
           {{if .Values.kettle.persistence.enabled}}
           persistentVolumeClaim:
