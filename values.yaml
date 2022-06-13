@@ -15,7 +15,7 @@ common:
   storageClass: master-nfs
   imagePullPolicy: IfNotPresent
   mysql: 
-    host: dataease-mysql
+    host: mysql
     port: 3306
     username: root
     password: Password123@mysql
