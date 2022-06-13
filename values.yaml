@@ -28,7 +28,7 @@ common:
 
 DataEase:
   enabled: true
-  engine_mode: simple
+  engine_mode: cluster
   image: dataease
   imageTag: "v1.10.0"
   replicas: 1
