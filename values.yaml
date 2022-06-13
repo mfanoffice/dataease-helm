@@ -76,7 +76,7 @@ kettle:
   replicas: 2
   persistence:
     enabled: true
-    accessModes: ReadWriteOnce
+    accessModes: ReadWriteMany
     size: 10Gi  
 
 logPersistence:
