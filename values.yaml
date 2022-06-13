@@ -12,7 +12,7 @@ ingress:
 common:
   imagePrefix: "registry.cn-qingdao.aliyuncs.com/dataease/"
   imagePullSecrets: nil
-  storageClass: master-nfs
+  storageClass: default
   imagePullPolicy: IfNotPresent
   mysql: 
     host: mysql
