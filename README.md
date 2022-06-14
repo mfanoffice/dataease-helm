@@ -1,4 +1,4 @@
-# DataEase Helm Chart 部署
+# Helm Chart 部署 DataEase
 ## 部署方式
 此安装包支持选择部署模式：“精简模式” 和 “集群模式”；
 
