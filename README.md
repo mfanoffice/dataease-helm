@@ -1,5 +1,5 @@
 # Helm Chart 部署 DataEase
-## 部署方式
+## 1. 部署方式
 此安装包支持选择部署模式：“精简模式” 和 “集群模式”；
 
 精简模式下仅部署dataease和MySQL，集群模式下将部署dataease、doris-fe、doris-be、kettle、mysql。
@@ -11,8 +11,8 @@ DataEase:
   engine_mode: cluster或simple
 ```
 
-## 组件说明
-### Doris
+## 2. 组件说明
+### 2.1 Doris
 Doris在Kubernetes中的部署方式为 hostNetwork，PodIP 即节点 IP，如此可避免BE节点重启BEIP发生变化需重新ADD BACKEND，保证了Doris服务的连续性。
 
 目前存在一些限制因素：每个Kubernetes节点只能启动一个BE，且每个Kubernetes节点需要为doris预留监听端口，默认：doris-fe(8030、9010、9020、9030)、doris-be(8040、8060、9050、9060、9070)；
@@ -33,7 +33,7 @@ doris_be:
 ```
 部署完DataEase后，在DataEase的web操作界面关联外部Doris集群即可。
 
-### Kettle
+### 2.2 Kettle
 Kettle默认部署2个副本，如果您想修改它，可以在values.yaml中修改：
 ```
 kettle:
@@ -41,7 +41,7 @@ kettle:
 ```
 注意，一个同步任务只能由一个Kettle调度，所以增加Kettle的数量可以在同一时间内完成更多的同步任务。
 
-### DataEase
+### 2.3 DataEase
 DataEase默认有两种外部访问方式：1. ingress， 2.NodePort 
 
 您可以在values.yaml中
@@ -57,21 +57,31 @@ common:
   dataease:
     nodeport_port: 30081 改为其他端口
 ```
-### 存储
+### 2.4 存储
 此环境使用StorageClass作为共享存储，默认为default，您可以根据自己的Kubernetes环境修改此名称：
 ```
 common:
   storageClass: default 改为其他名称
 ```
 
-## 使用示例
-1. 下载helm chart包，放置kuberneter环境；
-2. 解压helm chart包，修改values.yaml文件，对镜像版本和存储类按实际使用环境进项修改；
+## 3. 使用示例
+### 3.1  下载helm chart包
+
+访问 https://github.com/mfanoffice/dataease-helm.git
+
+下载helm chart包 dataease-1.2.0，放置kuberneter环境；或者git clone 然后自行打包。
+
+### 3.2 修改配置
+
+解压helm chart包，修改values.yaml文件，对镜像版本和存储类按实际使用环境进项修改；
 ```bash
 tar -zxvf dataease-1.2.0.tgz
 vi dataease-helm/values.yaml
 ```
-3. 安装
+
+### 3.3 安装
+
+
 ```bash
 helm install dataease dataease-1.2.0.tgz -f dataease/values.yaml
 ```
@@ -85,10 +95,13 @@ kubectl get pod
 ```bash
 kubectl logs -f dataease
 ```
-4. 配置Doris
+
+### 3.4 配置Doris
+
+
 Doris部署完后，没有将doris的be添加到fe中，接下来您需要手动执行添加动作：
 ```bash
-#进入 mysql POD  10.168.1.11为doris-fe的IP地址，此IP也是Kubernetes环境中doris-fe POD所在的宿主机IP
+#进入 mysql POD 10.168.1.11为doris-fe的IP地址，此IP也是Kubernetes环境中doris-fe POD所在的宿主机IP
 kubectl exec -it mysql-0 -- mysql -h10.168.1.11 -P9030 -uroot
 
 #添加doris be，10.168.1.10为doris-be的IP地址，此IP也是Kubernetes环境中doris-be POD所在的宿主机IP，端口默认不修改。
@@ -103,17 +116,18 @@ SET PASSWORD FOR 'root' = PASSWORD('Password123@doris');
 #查看添加状态 Alive: true 即为成功
 SHOW PROC '/backends'\G;
 ```
+### 3.5 配置DataEase
 
-5. 配置DataEase
+
 登录DataEase的web操作界面，完成最后的组件关联
 ```
-浏览器访问http://10.168.1.10:30081 
+浏览器访问http://10.168.1.10:30081
 （这里使用NodePort方式访问，IP为Kubernetes节点IP，端口默认30081。）
 用户名：admin
 密码： dataease
 ```
 
-找到如下位置关联Doris服务： 
+#### 3.5.1 关联Doris服务：
 
 系统管理--系统参数--引擎设置
 ```
@@ -135,7 +149,7 @@ Http Port: 8030
 ```
 填写完成点击“校验”成功，点击“保存”即可。
 
-找到如下位置关联Kettle服务： 
+#### 3.5.2 关联Kettle服务：
 
 系统管理--系统参数--Kettle设置--添加Kettle服务
 ```
@@ -150,6 +164,7 @@ Kettle地址： kettle
 #默认密码
 ```
 填写完成点击“校验”成功，点击“保存”即可。
+
 
 完成以上操作您已经在Kubernetes中配置完成了DataEase，接下来请尽情的使用它吧。
 
