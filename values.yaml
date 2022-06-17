@@ -30,7 +30,7 @@ DataEase:
   enabled: true
   engine_mode: cluster
   image: dataease
-  imageTag: "v1.10.0"
+  imageTag: "v1.11.1"
   replicas: 1
   properties: |-
     spring.datasource.url=jdbc:mysql://{{.Values.common.mysql.host}}:{{.Values.common.mysql.port}}/dataease?autoReconnect=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
