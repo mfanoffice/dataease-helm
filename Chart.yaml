@@ -9,4 +9,8 @@ maintainers:
 name: dataease
 sources:
 - https://github.com/dataease/
-version: 1.2.1
+<<<<<<< HEAD
+version: 1.2.0
+=======
+version: 1.2.0
+>>>>>>> 274c90e64d95efde5fe77c30c1fa1246e833c315
