@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{.Values.doris_be.host}}
     spec:
-      nodeName: fanym-master-1
+      #nodeName: fanym-master-1
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
