@@ -138,7 +138,7 @@ Doris地址： 10.168.1.11
 #在上一步创建的库
 
 用户名： root
-密码： Password123@mysql
+密码： Password123@doris
 #在上一步创建的root密码
 
 Query Port： 9030
