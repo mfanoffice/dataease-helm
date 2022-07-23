@@ -4,9 +4,9 @@ description: A Helm chart to deploy DataEase
 home: https://dataease.io
 icon: https://dataease.io/images/logo/favicon.ico
 maintainers:
-- email: fanyumin2014@163.com
+- email: fanyumin@139.com
   name: fanyumin
 name: dataease
 sources:
 - https://github.com/mfanoffice/dataease-helm
-version: 1.2.1
+version: 1.2.2
