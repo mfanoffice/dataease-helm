@@ -56,7 +56,7 @@ doris_fe:
   host: doris-fe
   imagePrefix: "uhub.service.ucloud.cn/dataease/"
   image: doris-fe
-  imageTag: "1.1"
+  imageTag: "v1.1"
   persistence:
     enabled: true
     accessModes: ReadWriteOnce
@@ -67,7 +67,7 @@ doris_be:
   host: doris-be
   imagePrefix: "uhub.service.ucloud.cn/dataease/"
   image: doris-be
-  imageTag: "1.1"
+  imageTag: "v1.1"
   persistence:
     enabled: true
     accessModes: ReadWriteOnce
