@@ -25,7 +25,7 @@ spec:
               valueFrom:
                  fieldRef:
                    fieldPath: status.podIP
-          image: uhub.service.ucloud.cn/dataease/doris-be:v1.0
+          image: {{.Values.doris_be.imagePrefix}}{{.Values.doris_be.image}}:{{.Values.doris_be.imageTag}}
           command: [ "/bin/bash", "-ce", "/opt/doris/be/bin/start_be.sh --daemon;tail -f /dev/null" ]
           livenessProbe:
             httpGet:
