@@ -96,7 +96,7 @@ vi dataease-helm/values.yaml
 #创建一个命名空间
 kubectl create ns de
 #部署
-helm install dataease dataease-1.2.0.tgz -f dataease-helm/values.yaml -n de
+helm install dataease dataease-1.2.x.tgz -f dataease-helm/values.yaml -n de
 ```
 
 您可以时刻观察POD的状态,如果都为runing状态则POD启动完成
