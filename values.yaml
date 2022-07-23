@@ -12,7 +12,7 @@ ingress:
 common:
   imagePrefix: "registry.cn-qingdao.aliyuncs.com/dataease/"
   imagePullSecrets: nil
-  storageClass: default
+  storageClass: dataease
   imagePullPolicy: IfNotPresent
   mysql: 
     host: mysql
@@ -28,9 +28,9 @@ common:
 
 DataEase:
   enabled: true
-  engine_mode: cluster
+  engine_mode: simple
   image: dataease
-  imageTag: "v1.11.1"
+  imageTag: "v1.12.0"
   replicas: 1
   properties: |-
     spring.datasource.url=jdbc:mysql://{{.Values.common.mysql.host}}:{{.Values.common.mysql.port}}/dataease?autoReconnect=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
