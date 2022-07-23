@@ -25,7 +25,7 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
-          image: uhub.service.ucloud.cn/dataease/doris-fe:v1.0
+          image: {{.Values.doris_fe.imagePrefix}}{{.Values.doris_fe.image}}:{{.Values.doris_fe.imageTag}}
           command: [ "/bin/bash", "-ce", "/opt/doris/fe/bin/start_fe.sh --daemon;tail -f /dev/null" ]
           volumeMounts:
           - mountPath: /opt/fe/doris-meta
