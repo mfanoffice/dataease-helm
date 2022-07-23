@@ -2,9 +2,11 @@
 ## 1. 部署方式
 此安装包支持选择部署模式：“精简模式” 和 “集群模式”；
 
-精简模式下仅部署dataease和MySQL，集群模式下将部署dataease、doris-fe、doris-be、kettle、mysql。
+精简模式下仅部署 dataease 和 MySQL，集群模式下将部署 dataease、doris-fe、doris-be、kettle、mysql。
 
-在values.yaml中修改：
+默认为 simple 模式。
+
+在 values.yaml 中修改：
 ```
 DataEase:
   enabled: true
@@ -34,10 +36,10 @@ doris_be:
 部署完DataEase后，在DataEase的web操作界面关联外部Doris集群即可。
 
 ### 2.2 Kettle
-Kettle默认部署2个副本，如果您想修改它，可以在values.yaml中修改：
+Kettle默认部署1个副本，如果您想修改它，可以在values.yaml中修改：
 ```
 kettle:
-  replicas: 2 改为其他数值
+  replicas: 1 改为其他数值
 ```
 注意，一个同步任务只能由一个Kettle调度，所以增加Kettle的数量可以在同一时间内完成更多的同步任务。
 
@@ -61,7 +63,7 @@ common:
 此环境使用StorageClass作为共享存储，默认为default，您可以根据自己的Kubernetes环境修改此名称：
 ```
 common:
-  storageClass: default 改为其他名称
+  storageClass: dataease 改为其他名称
 ```
 
 ## 3. 使用示例
@@ -69,13 +71,21 @@ common:
 
 访问 https://github.com/mfanoffice/dataease-helm.git
 
-下载helm chart包 dataease-1.2.0，放置kuberneter环境；或者git clone 然后自行打包。
+下载helm chart包 dataease-1.2.0，放置kuberneter环境；
+
+或者git clone 然后自行打包：
+
+```bash
+git clone https://github.com/mfanoffice/dataease-helm.git
+#可自行修改配置后再打包
+helm package dataease-helm/
+```
 
 ### 3.2 修改配置
 
 解压helm chart包，修改values.yaml文件，对镜像版本和存储类按实际使用环境进项修改；
+
 ```bash
-tar -zxvf dataease-1.2.0.tgz
 vi dataease-helm/values.yaml
 ```
 
@@ -83,7 +93,10 @@ vi dataease-helm/values.yaml
 
 
 ```bash
-helm install dataease dataease-1.2.0.tgz -f dataease/values.yaml
+#创建一个命名空间
+kubectl create ns de
+#部署
+helm install dataease dataease-1.2.0.tgz -f dataease-helm/values.yaml -n de
 ```
 
 您可以时刻观察POD的状态,如果都为runing状态则POD启动完成
