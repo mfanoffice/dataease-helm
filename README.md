@@ -115,7 +115,7 @@ kubectl logs -f dataease
 Doris部署完后，没有将doris的be添加到fe中，接下来您需要手动执行添加动作：
 ```bash
 #进入 mysql POD 10.168.1.11为doris-fe的IP地址，此IP也是Kubernetes环境中doris-fe POD所在的宿主机IP
-kubectl exec -it mysql-0 -- mysql -h10.168.1.11 -P9030 -uroot
+kubectl exec -it mysql-0 -n de -- mysql -h10.168.1.11 -P9030 -uroot
 
 #添加doris be，10.168.1.10为doris-be的IP地址，此IP也是Kubernetes环境中doris-be POD所在的宿主机IP，端口默认不修改。
 ALTER SYSTEM ADD BACKEND "10.168.1.10:9050";
