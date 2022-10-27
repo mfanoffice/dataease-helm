@@ -12,7 +12,7 @@ ingress:
 common:
   imagePrefix: "registry.cn-qingdao.aliyuncs.com/dataease/"
   imagePullSecrets: nil
-  storageClass: dataease
+  storageClass: dataease-sc
   imagePullPolicy: IfNotPresent
   mysql: 
     host: mysql
@@ -30,7 +30,7 @@ DataEase:
   enabled: true
   engine_mode: simple
   image: dataease
-  imageTag: "v1.12.0"
+  imageTag: "v1.15.3"
   replicas: 1
   properties: |-
     spring.datasource.url=jdbc:mysql://{{.Values.common.mysql.host}}:{{.Values.common.mysql.port}}/dataease?autoReconnect=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
@@ -44,7 +44,7 @@ DataEase:
 mysql:
   enabled: true
   image: mysql
-  imageTag: "5.7.36"
+  imageTag: "5.7.39"
   password: Password123@mysql
   persistence:
     enabled: true
@@ -56,7 +56,7 @@ doris_fe:
   host: doris-fe
   imagePrefix: "uhub.service.ucloud.cn/dataease/"
   image: doris-fe
-  imageTag: "v1.1"
+  imageTag: "v1.1.3"
   persistence:
     enabled: true
     accessModes: ReadWriteOnce
@@ -67,7 +67,7 @@ doris_be:
   host: doris-be
   imagePrefix: "uhub.service.ucloud.cn/dataease/"
   image: doris-be
-  imageTag: "v1.1"
+  imageTag: "v1.1.3"
   persistence:
     enabled: true
     accessModes: ReadWriteOnce
