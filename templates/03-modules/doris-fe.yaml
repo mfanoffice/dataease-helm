@@ -17,7 +17,7 @@ spec:
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-      #nodeName: fanym-worker-1
+      #nodeName: worker-1
       containers:
         - name: {{.Values.doris_fe.host}}
           env:
@@ -26,11 +26,11 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
           image: {{.Values.doris_fe.imagePrefix}}{{.Values.doris_fe.image}}:{{.Values.doris_fe.imageTag}}
-          command: [ "/bin/bash", "-ce", "/opt/doris/fe/bin/start_fe.sh --daemon;tail -f /dev/null" ]
+          command: [ "/bin/bash", "-ce", "/opt/doris/bin/start_fe.sh --daemon;tail -f /dev/null" ]
           volumeMounts:
-          - mountPath: /opt/fe/doris-meta
+          - mountPath: /opt/doris/doris-meta
             name: opt-fe-doris-meta
-          - mountPath: /opt/doris/fe/conf/fe.conf
+          - mountPath: /opt/doris/conf/fe.conf
             name: opt-doris-fe-config
             subPath: fe.conf
           livenessProbe:
