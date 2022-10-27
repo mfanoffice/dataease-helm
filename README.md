@@ -138,6 +138,7 @@ SHOW PROC '/backends'\G;
 # NodePort 方式访问
 浏览器访问 http://10.168.1.10:30081
 （IP 为 Kubernetes 节点 IP，端口默认 30081）
+
 # Ingress 方式访问
 浏览器访问 http://demo.apps.dataease.com
 (需要手动做域名映射，默认域名：demo.apps.dataease.com)
