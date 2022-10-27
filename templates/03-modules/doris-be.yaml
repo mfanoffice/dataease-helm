@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{.Values.doris_be.host}}
     spec:
-      #nodeName: fanym-master-1
+      #nodeName: master-1
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
@@ -26,7 +26,7 @@ spec:
                  fieldRef:
                    fieldPath: status.podIP
           image: {{.Values.doris_be.imagePrefix}}{{.Values.doris_be.image}}:{{.Values.doris_be.imageTag}}
-          command: [ "/bin/bash", "-ce", "/opt/doris/be/bin/start_be.sh --daemon;tail -f /dev/null" ]
+          command: [ "/bin/bash", "-ce", "/opt/doris/bin/start_be.sh --daemon;tail -f /dev/null" ]
           livenessProbe:
             httpGet:
               path: /api/health
@@ -54,9 +54,9 @@ spec:
               cpu: 200m
               memory: 1G
           volumeMounts:
-            - mountPath: /opt/be/storage
+            - mountPath: /opt/doris/storage
               name: opt-be-storage
-            - mountPath: /opt/doris/be/conf/be.conf
+            - mountPath: /opt/doris/conf/be.conf
               name: opt-doris-be-config
               subPath: be.conf
       volumes:
