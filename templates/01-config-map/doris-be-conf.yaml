@@ -11,5 +11,6 @@ data:
     webserver_port = 8040
     heartbeat_service_port = 9050
     brpc_port = 8060
+    storage_root_path = ${DORIS_HOME}/storage
     priority_networks = ${BE_IPADDRESS}/24
 {{end}}
