@@ -18,6 +18,9 @@ spec:
           image: {{.Values.common.imagePrefix}}{{.Values.DataEase.image}}:{{.Values.DataEase.imageTag}}
           imagePullPolicy: {{.Values.common.imagePullPolicy}}
           resources:
+            limits:
+              cpu: {{.Values.DataEase.resourceLimits.cpu}}
+              memory: {{.Values.DataEase.resourceLimits.memory}}
             requests:
               memory: 512Mi
               cpu: 0.4
