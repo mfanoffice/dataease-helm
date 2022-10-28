@@ -20,7 +20,10 @@ spec:
           image: {{.Values.common.imagePrefix}}{{.Values.kettle.image}}:{{.Values.kettle.imageTag}}
           imagePullPolicy: {{.Values.common.imagePullPolicy}}
           resources:
-            requests:
+            limits:
+              cpu: {{.Values.kettle.resourceLimits.cpu}}
+              memory: {{.Values.kettle.resourceLimits.memory}}
+            requests:         
               memory: 200Mi
               cpu: 0.2
           env:
