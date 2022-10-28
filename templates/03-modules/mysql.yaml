@@ -19,6 +19,9 @@ spec:
           image: {{.Values.common.imagePrefix}}{{.Values.mysql.image}}:{{.Values.mysql.imageTag}}
           imagePullPolicy: {{.Values.common.imagePullPolicy}}
           resources:
+            limits:
+              cpu: {{.Values.mysql.resourceLimits.cpu}}
+              memory: {{.Values.mysql.resourceLimits.memory}}
             requests:
               memory: 200Mi
               cpu: 0.2
