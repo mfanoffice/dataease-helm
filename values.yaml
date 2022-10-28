@@ -32,6 +32,9 @@ DataEase:
   image: dataease
   imageTag: "v1.15.3"
   replicas: 1
+  resourceLimits:
+    cpu: 4
+    memory: 8G
   properties: |-
     spring.datasource.url=jdbc:mysql://{{.Values.common.mysql.host}}:{{.Values.common.mysql.port}}/dataease?autoReconnect=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     spring.datasource.username={{.Values.common.mysql.username}}
