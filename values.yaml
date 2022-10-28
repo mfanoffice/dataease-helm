@@ -46,6 +46,9 @@ mysql:
   image: mysql
   imageTag: "5.7.39"
   password: Password123@mysql
+  resourceLimits:
+    cpu: 4
+    memory: 8G
   persistence:
     enabled: true
     accessModes: ReadWriteOnce
@@ -86,6 +89,9 @@ kettle:
   java_options: "-Xms1024m -Xmx4096m -XX:MaxPermSize=256m -Dfile.encoding=utf-8"
   host: kettle
   replicas: 1
+  resourceLimits:
+    cpu: 4
+    memory: 8G
   persistence:
     enabled: true
     accessModes: ReadWriteMany
