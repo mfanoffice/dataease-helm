@@ -1,4 +1,4 @@
-{{ if .Values.doris_fe.persistence.enabled}}
+{{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.doris_fe.enable)}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -12,7 +12,7 @@ spec:
   storageClassName: {{.Values.common.storageClass}}
 {{end}}
 ---
-{{ if .Values.doris_be.persistence.enabled}}
+{{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.doris_be.enable)}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
