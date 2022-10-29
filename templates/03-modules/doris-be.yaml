@@ -62,7 +62,7 @@ spec:
       volumes:
       - name: opt-be-storage
         persistentVolumeClaim:
-          claimName: pvc-doris-be
+          claimName: doris-be-pvc
       - name: opt-doris-be-config
         configMap:
           name: be-config
