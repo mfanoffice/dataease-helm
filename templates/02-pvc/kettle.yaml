@@ -1,4 +1,4 @@
-{{ if .Values.kettle.persistence.enabled}}
+{{ if (eq .Values.DataEase.engine_mode "cluster")}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
