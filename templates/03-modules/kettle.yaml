@@ -1,4 +1,4 @@
-{{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.kettle.enable)}}
+{{if (eq .Values.DataEase.engine_mode "cluster")}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -36,13 +36,9 @@ spec:
             - name: opt-dataease-data-kettle
               mountPath: /opt/dataease/data/kettle
       volumes:
-        - name: opt-dataease-data-kettle
-          {{if .Values.kettle.persistence.enabled}}
+        - name: opt-dataease-data-kettle         
           persistentVolumeClaim:
             claimName: opt-dataease-data-kettle
-          {{ else }}
-          emptyDir: {}
-          {{ end }}
           
 ---
 apiVersion: v1
