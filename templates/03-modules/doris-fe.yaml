@@ -60,7 +60,7 @@ spec:
       volumes:
       - name: opt-fe-doris-meta
         persistentVolumeClaim:
-          claimName: pvc-doris-fe
+          claimName: doris-fe-pvc
       - name: opt-doris-fe-config
         configMap:
           name: fe-config
