@@ -15,7 +15,9 @@ DataEase:
 
 ## 2. 组件说明
 ### 2.1 Doris
-Doris 在 Kubernetes 中的部署方式为 hostNetwork，PodIP 即节点 IP，如此可避免BE节点重启BEIP发生变化需重新 ADD BACKEND，保证了 Doris 服务的连续性。
+Doris 只有在 cluster 模式下才会部署；
+
+在 Kubernetes 中的部署方式为 hostNetwork，PodIP 即节点 IP，如此可避免BE节点重启BEIP发生变化需重新 ADD BACKEND，保证了 Doris 服务的连续性。
 
 目前存在一些限制因素：每个 Kubernetes 节点只能启动一个BE，且每个 Kubernetes 节点需要为 Doris 预留监听端口，默认：doris-fe(8030、9010、9020、9030)、doris-be(8040、8060、9050、9060、9070)；
 
@@ -36,6 +38,8 @@ doris_be:
 部署完 DataEase 后，在 DataEase 的 web 操作界面关联外部 Doris 集群即可。
 
 ### 2.2 Kettle
+Kettle 只有在 cluster 模式下才会部署；
+
 Kettle 默认部署1个副本，如果您想修改它，可以在 values.yaml 中修改：
 ```
 kettle:
@@ -44,7 +48,7 @@ kettle:
 注意，一个同步任务只能由一个 Kettle 调度，所以增加 Kettle 的数量可以在同一时间内完成更多的同步任务。
 
 ### 2.3 DataEase
-DataEase 默认有两种外部访问方式：1. ingress， 2.NodePort 
+DataEase 默认有两种外部访问方式：1. ingress， 2. NodePort 
 
 你可以在 values.yaml 中配置 ingress 的开关状态：
 ```
@@ -58,10 +62,10 @@ common:
     nodeport_port: 30081 改为其他端口
 ```
 ### 2.4 存储
-此环境使用 StorageClass 作为共享存储，默认为 default，您可以根据自己的 Kubernetes 环境修改此名称：
+此环境使用 StorageClass 作为共享存储，您可以根据自己的 Kubernetes 环境现有的 StorageClass 修改此名称：
 ```
 common:
-  storageClass: dataease-sc 改为其他名称
+  storageClass: de-nfs 改为其他名称
 ```
 
 ## 3. 部署步骤
@@ -69,19 +73,20 @@ common:
 
 访问 https://github.com/mfanoffice/dataease-helm.git
 
-下载 helm chart 包 dataease-1.x.x，放置 Kubernetes 环境的服务器中；
+下载 helm chart 包 dataease-1.x.x，放置 Kubernetes 环境的服务器中，并解压压缩包；
+```
+tar -zxvf dataease-1.x.x.tgz
+```
 
 或者git clone 然后自行打包：
-
 ```bash
 git clone https://github.com/mfanoffice/dataease-helm.git
-#可自行修改配置后再打包
-helm package dataease-helm/
+
 ```
 
 ### 3.2 修改配置
 
-解压 helm chart 包，修改 values.yaml 文件，对存储类按实际使用环境进行修改；
+解压 helm chart 包后，修改 values.yaml 文件，对存储类、安装模式 或其他参数，按实际使用环境进行修改；
 
 ```bash
 vi dataease-helm/values.yaml
@@ -96,18 +101,20 @@ storageClass: dataease-sc 改为其他名称
 ```bash
 #创建一个命名空间
 kubectl create ns de
+#对修改后的 dataease-helm 打包
+helm package dataease-helm/
 #部署
-helm install dataease dataease-1.x.x.tgz -f dataease-helm/values.yaml -n de
+helm install dataease dataease-1.x.x.tgz -n de
 ```
 
-您可以时刻观察 Pod 的状态,如果都为 running 状态则 Pod 启动完成
+你可以时刻观察 Pod 的状态,如果都为 running 状态则 Pod 启动完成
 ```bash
 kubectl get pod
 ```
 
 这里需要注意的是，dataease 的 Pod 后台需要完成初始化操作，可以先观察日志等待完成后再继续操作。
 ```bash
-kubectl logs -f dataease
+kubectl logs -f dataease -n de
 ```
 
 ### 3.4 配置Doris
