@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvc-doris-fe
+  name: doris-fe-pvc
 spec:
   accessModes:
     - {{.Values.doris_fe.persistence.accessModes}}
@@ -16,7 +16,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvc-doris-be
+  name: doris-be-pvc
 spec:
   accessModes:
     - {{.Values.doris_be.persistence.accessModes}}
