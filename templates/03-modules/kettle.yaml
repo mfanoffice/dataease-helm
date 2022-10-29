@@ -36,9 +36,9 @@ spec:
             - name: opt-dataease-data-kettle
               mountPath: /opt/dataease/data/kettle
       volumes:
-        - name: opt-dataease-data-kettle         
+        - name: opt-dataease-data-kettle
           persistentVolumeClaim:
-            claimName: opt-dataease-data-kettle
+            claimName: kettle-data-pvc
           
 ---
 apiVersion: v1
