@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: opt-dataease-data-kettle
+  name: kettle-data-pvc
 spec:
   accessModes:
     - {{.Values.kettle.persistence.accessModes}}
