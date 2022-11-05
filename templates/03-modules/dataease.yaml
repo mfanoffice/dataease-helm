@@ -70,7 +70,7 @@ spec:
           emptyDir: {}
           {{ end }}
         - name: opt-dataease-data-kettle
-          {{if and (eq .Values.DataEase.engine_mode "cluster") (.Values.kettle.enable)}}
+          {{if and (eq .Values.DataEase.engine_mode "cluster")}}
           persistentVolumeClaim:
             claimName: kettle-data-pvc
           {{ else }}
