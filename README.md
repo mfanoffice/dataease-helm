@@ -92,7 +92,7 @@ git clone https://github.com/mfanoffice/dataease-helm.git
 vi dataease-helm/values.yaml
 
 engine_mode: cluster或simple
-storageClass: dataease-sc 改为其他名称
+storageClass: de-nfs 改为其他名称
 ```
 
 ### 3.3 安装
@@ -119,6 +119,7 @@ kubectl logs -f dataease -n de
 
 ### 3.4 配置Doris
 
+如果选择 cluster 部署模式，继续阅读下文，如果选择 simple 部署模式，到此为止已部署完成。
 
 Doris 部署完后，没有将 Doris 的 be 添加到 fe 中，接下来您需要手动执行添加动作：
 ```bash
