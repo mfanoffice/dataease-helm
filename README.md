@@ -1,5 +1,5 @@
 # Helm Chart 部署 DataEase
-## 1. 部署方式
+## 1. 部署模式
 此安装包支持选择部署模式：“精简模式” 和 “集群模式”；
 
 精简模式下仅部署 dataease 和 MySQL，集群模式下将部署 dataease、doris-fe、doris-be、kettle、mysql。
