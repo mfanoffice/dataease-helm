@@ -40,7 +40,6 @@ spec:
               subPath: init.sql
             - mountPath: /var/lib/mysql
               name: mysql-data
-              subPath: mysql
       {{if ne (.Values.common.imagePullSecrets | default "nil") "nil"}}
       imagePullSecrets:
         - name: {{.Values.common.imagePullSecrets}}
