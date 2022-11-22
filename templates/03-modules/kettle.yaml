@@ -45,7 +45,7 @@ spec:
         - name: opt-dataease-data-kettle
           persistentVolumeClaim:
             claimName: kettle-data-pvc
-         - name: opt-dataease-xml-kettle
+        - name: opt-dataease-xml-kettle
           configMap:
             name: kettle-xml
         - name: opt-dataease-properties-kettle
