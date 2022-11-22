@@ -36,10 +36,10 @@ spec:
             - name: opt-dataease-data-kettle
               mountPath: /opt/dataease/data/kettle
             - name: opt-dataease-xml-kettle
-              mountPath: /opt/dataease/conf/.kettle/
+              mountPath: /opt/dataease/conf/.kettle/repositories.xml
               subPath: repositories.xml
             - name: opt-dataease-properties-kettle
-              mountPath: /opt/dataease/conf/.kettle/
+              mountPath: /opt/dataease/conf/.kettle/kettle.properties
               subPath: kettle.properties
       volumes:
         - name: opt-dataease-data-kettle
