@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: dataease-data-static-resource-pvc
+  name: dataease-data-custom-pvc
 spec:
   accessModes:
     - {{.Values.dataPersistence.accessModes}}

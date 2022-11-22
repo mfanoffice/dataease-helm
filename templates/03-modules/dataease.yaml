@@ -35,10 +35,16 @@ spec:
               name: opt-dataease-logs
             - mountPath: /opt/dataease/plugins/thirdpart
               name: opt-dataease-plugins-thirdpart
+            - mountPath: /opt/dataease/data/kettle
+              name: opt-dataease-data-kettle              
             - mountPath: /opt/dataease/data/static-resource
               name: opt-dataease-data-static-resource
-            - mountPath: /opt/dataease/data/kettle
-              name: opt-dataease-data-kettle
+            - mountPatn: /opt/dataease/custom-drivers
+              name: opt-dataease-custom-drivers
+            - mountPath: /opt/dataease/data/custom
+              name: opt-dataease-data-custom
+            - mountPath: /opt/dataease/data/business
+              name: opt-dataease-data-business
       {{if ne (.Values.common.imagePullSecrets | default "nil") "nil"}}
       imagePullSecrets:
         - name: {{.Values.common.imagePullSecrets}}
@@ -56,19 +62,8 @@ spec:
           emptyDir: {}
           {{ end }}
         - name: opt-dataease-plugins-thirdpart
-          {{if .Values.dataPersistence.enabled}}
           persistentVolumeClaim:
             claimName: dataease-plugins-thirdpart-pvc
-          {{ else }}
-          emptyDir: {}
-          {{ end }}
-        - name: opt-dataease-data-static-resource
-          {{if .Values.dataPersistence.enabled}}
-          persistentVolumeClaim:
-            claimName: dataease-data-static-resource-pvc
-          {{ else }}
-          emptyDir: {}
-          {{ end }}
         - name: opt-dataease-data-kettle
           {{if and (eq .Values.DataEase.engine_mode "cluster")}}
           persistentVolumeClaim:
@@ -76,6 +71,18 @@ spec:
           {{ else }}
           emptyDir: {}
           {{ end }}
+        - name: opt-dataease-data-static-resource
+          persistentVolumeClaim:
+            claimName: dataease-data-static-resource-pvc
+        - name: opt-dataease-custom-drivers
+          persistentVolumeClaim:
+            claimName: dataease-custom-drivers-pvc
+        - name: opt-dataease-data-custom
+          persistentVolumeClaim:
+            claimName: dataease-data-custom-pvc
+        - name: opt-dataease-data-business
+          persistentVolumeClaim:
+            claimName: dataease-data-business-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -96,7 +103,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Values.common.dataease.nodeport_host}}
+  name: dataease-http
   labels:
     app: {{.Values.common.dataease.host}}
 spec:

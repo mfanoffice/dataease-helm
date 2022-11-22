@@ -75,6 +75,21 @@ spec:
     app: {{.Values.common.mysql.host}}
   ports:
     - name: tcp
-      port: 3306
+      port: {{.Values.common.mysql.port}}
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dataease-mysql-nodeport
+  labels:
+    app: {{.Values.common.mysql.host}}
+spec:
+  type: NodePort
+  selector:
+    app: {{.Values.common.mysql.host}}
+  ports:
+  - port: {{.Values.common.mysql.port}}
+    targetPort: {{.Values.common.mysql.port}}
+    nodePort: {{.Values.common.mysql.nodeport_port}}
 {{end}}

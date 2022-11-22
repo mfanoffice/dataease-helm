@@ -35,10 +35,16 @@ spec:
           volumeMounts:
             - name: opt-dataease-data-kettle
               mountPath: /opt/dataease/data/kettle
+            - name: opt-dataease-config-kettle
+              mountPath: /opt/dataease/conf/.kettle/
+              subPath: repositories.xml
       volumes:
         - name: opt-dataease-data-kettle
           persistentVolumeClaim:
             claimName: kettle-data-pvc
+        - name: opt-dataease-config-kettle
+          configMap:
+            name: kettle-config
           
 ---
 apiVersion: v1

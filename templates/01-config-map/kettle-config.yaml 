@@ -1,0 +1,18 @@
+{{ if (eq .Values.DataEase.engine_mode "cluster")}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kettle-config
+data:
+  repositories.xml: |
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories>
+    <repository>    <id>KettleFileRepository</id>
+        <name>repo</name>
+        <description>File repository</description>
+        <is_default>false</is_default>
+        <base_directory>/opt/dataease/data/kettle</base_directory>
+        <read_only>N</read_only>
+        <hides_hidden_files>N</hides_hidden_files>
+    </repository>  </repositories>
+{{end}}

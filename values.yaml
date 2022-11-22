@@ -17,20 +17,20 @@ common:
   mysql: 
     host: mysql
     port: 3306
+    nodeport_port: 30036
     username: root
     password: Password123@mysql
   dataease:
     host: dataease
     initpassword: DataEase123456
     logintimeout: 480
-    nodeport_host: dataease-http
     nodeport_port: 30081
 
 DataEase:
   enabled: true
   engine_mode: simple
   image: dataease
-  imageTag: "v1.16.0"
+  imageTag: "v1.16.1"
   replicas: 1
   resourceLimits:
     cpu: 4
@@ -53,9 +53,8 @@ mysql:
     cpu: 4
     memory: 8G
   persistence:
-    enabled: true
     accessModes: ReadWriteOnce
-    size: 20Gi
+    size: 10Gi
 
 doris_fe:
   enable: true
@@ -104,6 +103,5 @@ logPersistence:
   size: 10Gi
 
 dataPersistence:
-  enabled: true
   accessModes: ReadWriteOnce
   size: 10Gi
