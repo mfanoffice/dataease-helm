@@ -39,7 +39,7 @@ spec:
               name: opt-dataease-data-kettle              
             - mountPath: /opt/dataease/data/static-resource
               name: opt-dataease-data-static-resource
-            - mountPatn: /opt/dataease/custom-drivers
+            - mountPath: /opt/dataease/custom-drivers
               name: opt-dataease-custom-drivers
             - mountPath: /opt/dataease/data/custom
               name: opt-dataease-data-custom
