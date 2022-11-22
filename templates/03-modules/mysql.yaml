@@ -54,13 +54,8 @@ spec:
             name: mysql-config
           name: init-mysql
         - name: mysql-data
-          {{if .Values.mysql.persistence.enabled}}
           persistentVolumeClaim:
             claimName: mysql-data-pvc
-          {{ else }}
-          emptyDir: {}
-          {{ end }}
-          
 ---
 apiVersion: v1
 kind: Service
