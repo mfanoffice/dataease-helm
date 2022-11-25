@@ -24,6 +24,9 @@ spec:
             requests:
               memory: 512Mi
               cpu: 0.4
+          env:
+            - name: JAVA_OPTIONS
+              value: {{.Values.DataEase.java_options}}
           ports:
             - name: tcp
               containerPort: 8081

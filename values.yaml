@@ -43,6 +43,7 @@ DataEase:
     dataease.login_timeout={{.Values.common.dataease.logintimeout}}
     logger.level=INFO
     engine_mode={{.Values.DataEase.engine_mode}}
+  java_options: " -Dfile.encoding=utf-8 -Xmx8192m -XX:MaxPermSize=1024m -Xss5m"
 
 mysql:
   enabled: true
