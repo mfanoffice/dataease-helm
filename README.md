@@ -18,6 +18,7 @@ DataEase:
 Doris 只有在 cluster 模式下才会部署；
 
 在 Kubernetes 中的部署方式为 hostNetwork，PodIP 即节点 IP，如此可避免BE节点重启BEIP发生变化需重新 ADD BACKEND，保证了 Doris 服务的连续性。
+所以在部署 Doris 前，建议修改 dataease-helm/templates/03-modules/doris-fe.yaml、doris-be.yaml 将 #nodeName: worker-1 解除注释并指定节点名称，防止 k8s 节点故障导致容器漂移。
 
 目前存在一些限制因素：每个 Kubernetes 节点只能启动一个BE，且每个 Kubernetes 节点需要为 Doris 预留监听端口，默认：doris-fe(8030、9010、9020、9030)、doris-be(8040、8060、9050、9060、9070)；
 
