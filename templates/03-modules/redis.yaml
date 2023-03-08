@@ -1,0 +1,57 @@
+{{ if .Values.redis.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{.Values.redis.host}}
+spec:
+  replicas: 1
+  serviceName: {{.Values.redis.host}}
+  selector:
+    matchLabels:
+      name: {{.Values.redis.host}}
+  template:
+    metadata:
+      labels:
+        name: {{.Values.redis.host}}
+    spec:
+      initContainers:
+      - name: init-redis
+        image: uhub.service.ucloud.cn/dataease/busybox:latest
+        command: ['sh', '-c', 'mkdir -p /redis/log/;mkdir -p /redis/conf/;mkdir -p /redis/data/']
+      containers:
+      - name: {{.Values.redis.host}}
+        image: uhub.service.ucloud.cn/dataease/redis:5.0.6
+        imagePullPolicy: {{.Values.common.imagePullPolicy}}
+        command:
+        - sh
+        - -c
+        - "exec redis-server /redis/conf/redis.conf"
+        ports:
+        - containerPort: 6379
+          name: redis
+          protocol: TCP
+        volumeMounts:
+        - name: redis-config
+          mountPath: /redis/conf/
+      volumes:
+      - name: redis-config
+        configMap:
+          name: redis-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.redis.host}}
+  labels:
+    app: {{.Values.redis.host}}
+spec:
+  clusterIP: None
+  selector:
+    app: {{.Values.redis.host}}
+  ports:
+    - name: tcp
+      port: 6379
+      protocol: TCP
+{{end}}
+
+

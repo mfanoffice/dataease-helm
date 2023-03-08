@@ -43,6 +43,19 @@ DataEase:
     dataease.login_timeout={{.Values.common.dataease.logintimeout}}
     logger.level=INFO
     engine_mode={{.Values.DataEase.engine_mode}}
+    #添加redis连接信息
+    spring.cache.type=redis
+
+    #redis公共配置
+    spring.redis.timeout=10000
+    spring.redis.lettuce.pool.max-active=8
+    spring.redis.lettuce.pool.max-wait=-1
+    spring.redis.lettuce.pool.max-idle=8
+    #单机模式 redis 配置
+    spring.redis.database=0
+    spring.redis.host={{.Values.redis.host}}
+    spring.redis.port=6379
+    spring.redis.password=admin123456
   java_options: " -Dfile.encoding=utf-8 -Xmx8192m -XX:MaxPermSize=1024m -Xss5m"
 
 mysql:
@@ -56,7 +69,15 @@ mysql:
   persistence:
     accessModes: ReadWriteOnce
     size: 10Gi
+redis:
+  enabled: true
+  host: redis
+  image: redis
+  imageTag: "5.0.6"
 
+  resourceLimits:
+    cpu: 4
+    memory: 8G
 doris_fe:
   enable: true
   host: doris-fe

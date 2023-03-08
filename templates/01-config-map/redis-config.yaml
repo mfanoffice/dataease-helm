@@ -1,0 +1,19 @@
+{{ if .Values.redis.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+data:
+  redis.conf: |
+        bind 0.0.0.0
+        port 6379
+        requirepass 111111
+        appendonly yes
+        cluster-config-file nodes-6379.conf
+        pidfile /redis/log/redis-6379.pid
+        cluster-config-file /redis/conf/redis.conf
+        dir /redis/data/
+        logfile /redis/log/redis-6379.log
+        cluster-node-timeout 5000
+        protected-mode no
+{{end}}
