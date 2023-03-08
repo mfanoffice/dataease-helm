@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{.Values.common.dataease.host}}
 spec:
-  replicas: 1
+  replicas: {{.Values.DataEase.replicas}}
   selector:
     matchLabels:
       app: {{.Values.common.dataease.host}}

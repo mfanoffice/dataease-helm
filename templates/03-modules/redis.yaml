@@ -18,6 +18,9 @@ spec:
       - name: init-redis
         image: uhub.service.ucloud.cn/dataease/busybox:latest
         command: ['sh', '-c', 'mkdir -p /redis/log/;mkdir -p /redis/conf/;mkdir -p /redis/data/']
+        volumeMounts:
+        - name: data
+          mountPath: /redis/       
       containers:
       - name: {{.Values.redis.host}}
         image: uhub.service.ucloud.cn/dataease/redis:5.0.6
@@ -33,25 +36,29 @@ spec:
         volumeMounts:
         - name: redis-config
           mountPath: /redis/conf/
+        - name: data
+          mountPath: /redis/
       volumes:
       - name: redis-config
         configMap:
           name: redis-config
+      - name: data
+        emptyDir: {}
 ---
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: {{.Values.redis.host}}
   labels:
-    app: {{.Values.redis.host}}
+    name: {{.Values.redis.host}}
+  name: {{.Values.redis.host}}
 spec:
-  clusterIP: None
-  selector:
-    app: {{.Values.redis.host}}
+  type: ClusterIP
   ports:
-    - name: tcp
-      port: 6379
-      protocol: TCP
+  - name: {{.Values.redis.host}}
+    port: 6379
+    targetPort: 6379
+  selector:
+    name: {{.Values.redis.host}}
 {{end}}
 
 

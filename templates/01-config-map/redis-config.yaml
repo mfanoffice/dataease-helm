@@ -7,7 +7,7 @@ data:
   redis.conf: |
         bind 0.0.0.0
         port 6379
-        requirepass 111111
+        requirepass {{.Values.redis.password}}
         appendonly yes
         cluster-config-file nodes-6379.conf
         pidfile /redis/log/redis-6379.pid
