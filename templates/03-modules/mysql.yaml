@@ -28,6 +28,8 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: {{.Values.mysql.password}}
+          args:
+            - "--ignore-db-dir=lost+found"
           ports:
             - name: tcp
               containerPort: 3306
