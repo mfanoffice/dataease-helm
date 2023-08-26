@@ -66,7 +66,7 @@ common:
 此环境使用 StorageClass 作为共享存储，您可以根据自己的 Kubernetes 环境现有的 StorageClass 修改此名称：
 ```
 common:
-  storageClass: de-nfs 改为其他名称
+  storageClass: dataease 改为你自己环境中的存储类名称
 ```
 
 ## 3. 部署步骤

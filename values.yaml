@@ -12,7 +12,7 @@ ingress:
 common:
   imagePrefix: "registry.cn-qingdao.aliyuncs.com/dataease/"
   imagePullSecrets: nil
-  storageClass: de-nfs
+  storageClass: dataease
   imagePullPolicy: IfNotPresent
   mysql: 
     host: mysql
@@ -30,7 +30,7 @@ DataEase:
   enabled: true
   engine_mode: simple
   image: dataease
-  imageTag: "v1.18.4"
+  imageTag: "v1.18.9"
   replicas: 1
   resourceLimits:
     cpu: 4
@@ -61,7 +61,7 @@ DataEase:
 mysql:
   enabled: true
   image: mysql
-  imageTag: "5.7.39"
+  imageTag: "5.7.41"
   password: Password123@mysql
   resourceLimits:
     cpu: 4
