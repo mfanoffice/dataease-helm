@@ -92,7 +92,6 @@ git clone https://github.com/mfanoffice/dataease-helm.git
 ```bash
 vi dataease-helm/values.yaml
 
-engine_mode: cluster或simple
 storageClass: de-nfs 改为其他名称
 ```
 
@@ -105,7 +104,7 @@ kubectl create ns de
 #对修改后的 dataease-helm 打包
 helm package dataease-helm/
 #部署
-helm install dataease dataease-1.x.x.tgz -n de
+helm install dataease dataease-1.18.xx.tgz -n de
 ```
 
 你可以时刻观察 Pod 的状态,如果都为 running 状态则 Pod 启动完成
@@ -116,6 +115,15 @@ kubectl get pod
 这里需要注意的是，dataease 的 Pod 后台需要完成初始化操作，可以先观察日志等待完成后再继续操作。
 ```bash
 kubectl logs -f dataease -n de
+```
+
+升级：
+```bash
+#直接通过 chart 包升级
+helm upgrade dataease dataease-1.18.xx.tgz -n de
+
+#或者通过 values.yaml 升级
+helm upgrade dataease -f dataease-helm/values.yaml  dataease-1.18.xx.tgz -n de
 ```
 
 ### 3.4 配置Doris
