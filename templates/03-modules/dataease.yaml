@@ -48,6 +48,8 @@ spec:
               name: opt-dataease-data-custom
             - mountPath: /opt/dataease/data/business
               name: opt-dataease-data-business
+            - mountPath: /opt/dataease/data/ehcache
+              name: opt-dataease-data-ehcache 
       {{if ne (.Values.common.imagePullSecrets | default "nil") "nil"}}
       imagePullSecrets:
         - name: {{.Values.common.imagePullSecrets}}
@@ -86,6 +88,9 @@ spec:
         - name: opt-dataease-data-business
           persistentVolumeClaim:
             claimName: dataease-data-business-pvc
+        - name: opt-dataease-data-ehcache
+          persistentVolumeClaim:
+            claimName: dataease-data-ehcache-pvc
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dataease-data-ehcache-pvc
+spec:
+  accessModes:
+    - {{.Values.dataPersistence.accessModes}}
+  resources:
+    requests:
+      storage: {{.Values.dataPersistence.size}}
+  storageClassName: {{.Values.common.storageClass}}
