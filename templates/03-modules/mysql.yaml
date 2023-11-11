@@ -28,8 +28,9 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: {{.Values.mysql.password}}
-          args:
-            - "--ignore-db-dir=lost+found"
+# v.18.12 开始使用MySQL8，注销此配置
+#          args:
+#            - "--ignore-db-dir=lost+found"
           ports:
             - name: tcp
               containerPort: 3306
