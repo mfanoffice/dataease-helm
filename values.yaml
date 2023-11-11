@@ -30,7 +30,7 @@ DataEase:
   enabled: true
   engine_mode: simple
   image: dataease
-  imageTag: "v1.18.11"
+  imageTag: "v1.18.12"
   replicas: 1
   resourceLimits:
     cpu: 4
@@ -61,7 +61,7 @@ DataEase:
 mysql:
   enabled: true
   image: mysql
-  imageTag: "5.7.43"
+  imageTag: "8.1.0"
   password: Password123@mysql
   resourceLimits:
     cpu: 4
