@@ -30,7 +30,7 @@ DataEase:
   enabled: true
   engine_mode: simple
   image: dataease
-  imageTag: "v1.18.12"
+  imageTag: "v1.18.14"
   replicas: 1
   resourceLimits:
     cpu: 4
